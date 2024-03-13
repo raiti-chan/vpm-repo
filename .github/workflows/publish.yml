@@ -56,8 +56,6 @@ jobs:
                   core.info('version: ' + filePath)
 
                   const jsonString = fs.readFileSync(filePath)
-                  core.info(jsonString)
-                  
                   const package = JSON.parse(jsonString)
                   const version = package.version
                   name = package.name
@@ -66,7 +64,7 @@ jobs:
                 })
 
                 if (name) {
-                  packages[name] = versions
+                  packages[name] = {versions: versions}
                 }
               })
 

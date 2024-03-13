@@ -69,10 +69,25 @@ jobs:
               })
 
               vpm.packages = packages
-              const dstVpmJson = JSON.stringify(vpm, null, 2)
-              core.info(dstVpmJson)
+              const outputVpmJson = JSON.stringify(vpm, null, 2)
+              core.info(outputVpmJson)
+
+              fs.writeFileSync('out/vpm.json', dstVpmJson)
             } catch(err) {
               core.error("Error while reading or parsing the JSON")
               core.setFailed(err)
             }
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v2
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: out
+      
+      - name: Deploy to Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
+          
       

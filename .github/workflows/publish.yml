@@ -73,7 +73,7 @@ jobs:
               core.info(outputVpmJson)
 
               if (!fs.existsSync('out')) {
-                fs.mkdirSync(path, {recursive: true})
+                fs.mkdirSync('out', {recursive: true})
               }
 
               fs.writeFileSync('out/vpm.json', outputVpmJson)

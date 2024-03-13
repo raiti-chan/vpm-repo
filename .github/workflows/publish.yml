@@ -36,13 +36,19 @@ jobs:
               const dirs = fs.readdirSync(packageDir).filter((file) => {
                 return fs.statSync(path.join(packageDir, file)).isDirectory()
               })
-              core.info('target dirs: ')
-              core.info(dirs)
-              core.info('')
 
               dirs.forEach((dir) => {
                 const targetDir = path.join(packageDir, dir)
-                core.info(targetDir)
+                core.info('package: ' + targetDir)
+
+                const files = fs.readdirSync(targetDir)
+                files.forEach((file) => {
+                  const filePath = path.join(targetDir, file)
+                  core.info('version: ' + filePath)
+
+                  const jsonString = fs.readFileSync(filePath)
+                  core.info(jsonString)
+                })
               })
             } catch(err) {
               core.error("Error while reading or parsing the JSON")

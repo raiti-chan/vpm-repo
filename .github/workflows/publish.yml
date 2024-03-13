@@ -72,6 +72,10 @@ jobs:
               const outputVpmJson = JSON.stringify(vpm, null, 2)
               core.info(outputVpmJson)
 
+              if (!fs.existsSync('out')) {
+                fs.mkdirSync(path, {recursive: true})
+              }
+
               fs.writeFileSync('out/vpm.json', outputVpmJson)
             } catch(err) {
               core.error("Error while reading or parsing the JSON")

@@ -36,8 +36,14 @@ jobs:
               const dirs = fs.readdirSync(packageDir).filter((file) => {
                 return fs.statSync(path.join(packageDir, file)).isDirectory()
               })
-
+              core.info('target dirs: ')
               core.info(dirs)
+              core.info('')
+
+              dirs.forEach((dir) => {
+                const targetDir = path.join(packageDir, dir)
+                core.info(targetDir)
+              })
             } catch(err) {
               core.error("Error while reading or parsing the JSON")
               core.setFailed(err)

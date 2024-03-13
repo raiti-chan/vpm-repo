@@ -35,7 +35,8 @@ jobs:
 
               const vpmJson = fs.readFileSync('vpm-temp.json')
               const vpm = JSON.parse(vpmJson)
-              core.info(vpm)
+              const repoUrl = vpm.url
+              core.info('Repo URL : ' + repoUrl)
 
               const dirs = fs.readdirSync(packageDir).filter((file) => {
                 return fs.statSync(path.join(packageDir, file)).isDirectory()
@@ -44,6 +45,8 @@ jobs:
               dirs.forEach((dir) => {
                 const targetDir = path.join(packageDir, dir)
                 core.info('package: ' + targetDir)
+                
+                var versions = {}
 
                 const files = fs.readdirSync(targetDir)
                 files.forEach((file) => {
@@ -52,8 +55,15 @@ jobs:
 
                   const jsonString = fs.readFileSync(filePath)
                   core.info(jsonString)
-
+                  
+                  const package = JSON.parse(jsonString)
+                  const version = package.version
+                  const name = package.name
+                  versions[version] = package
                 })
+
+                const versionsJson = JSON.stringify(versions)
+                core.info(versionsJson)
               })
             } catch(err) {
               core.error("Error while reading or parsing the JSON")

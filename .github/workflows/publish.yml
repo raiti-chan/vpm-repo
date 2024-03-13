@@ -42,13 +42,15 @@ jobs:
                 return fs.statSync(path.join(packageDir, file)).isDirectory()
               })
 
+              var packages = {}
+
               dirs.forEach((dir) => {
                 const targetDir = path.join(packageDir, dir)
                 core.info('package: ' + targetDir)
                 
                 var versions = {}
-
                 const files = fs.readdirSync(targetDir)
+                var name = ''
                 files.forEach((file) => {
                   const filePath = path.join(targetDir, file)
                   core.info('version: ' + filePath)
@@ -58,13 +60,18 @@ jobs:
                   
                   const package = JSON.parse(jsonString)
                   const version = package.version
-                  const name = package.name
+                  name = package.name
+                  package.repo = repoUrl
                   versions[version] = package
                 })
 
-                const versionsJson = JSON.stringify(versions)
-                core.info(versionsJson)
+                if (name) {
+                  packages[name] = versions
+                }
               })
+
+              vpm.packages = packages
+              const dstVpmJson = JSON.stringify(vpm, null, 2)
             } catch(err) {
               core.error("Error while reading or parsing the JSON")
               core.setFailed(err)

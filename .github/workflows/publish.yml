@@ -33,6 +33,10 @@ jobs:
               const path = require('path')
               const packageDir = 'packages'
 
+              const vpmJson = fs.readFileSync('vpm-temp.json')
+              const vpm = JSON.parse(vpmJson)
+              core.info(vpm)
+
               const dirs = fs.readdirSync(packageDir).filter((file) => {
                 return fs.statSync(path.join(packageDir, file)).isDirectory()
               })
@@ -48,6 +52,7 @@ jobs:
 
                   const jsonString = fs.readFileSync(filePath)
                   core.info(jsonString)
+
                 })
               })
             } catch(err) {

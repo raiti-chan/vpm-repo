@@ -29,9 +29,15 @@ jobs:
         with:
           script: |
             try {
-              const rsf = require('fs')
-              const jsonString = rsf.readFileSync('packages/vpm-test/vpm-test-1.0.0.json')
-              core.info(jsonString)
+              const fs = require('fs')
+              const path = require('path')
+              const packageDir = 'packages'
+
+              const dirs = fs.readdirSync(packageDir).filter((file) => {
+                return fs.statSync(path.join(packageDir, file)).isDirectory()
+              })
+
+              core.info(dirs)
             } catch(err) {
               core.error("Error while reading or parsing the JSON")
               core.setFailed(err)

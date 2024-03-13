@@ -31,7 +31,7 @@ jobs:
             try {
               const rsf = require('fs')
               const jsonString = rsf.readFileSync('packages/vpm-test/vpm-test-1.0.0.json')
-              console.log(jsonString)
+              core.info(jsonString)
             } catch(err) {
               core.error("Error while reading or parsing the JSON")
               core.setFailed(err)

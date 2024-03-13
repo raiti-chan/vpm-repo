@@ -72,7 +72,7 @@ jobs:
               const outputVpmJson = JSON.stringify(vpm, null, 2)
               core.info(outputVpmJson)
 
-              fs.writeFileSync('out/vpm.json', dstVpmJson)
+              fs.writeFileSync('out/vpm.json', outputVpmJson)
             } catch(err) {
               core.error("Error while reading or parsing the JSON")
               core.setFailed(err)
